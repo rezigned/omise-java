@@ -1,23 +1,14 @@
-package test.co.omise;
+package co.omise.model;
 
-import static org.junit.Assert.*;
+import co.omise.OmiseSetting;
+import co.omise.exception.OmiseAPIException;
+import co.omise.exception.OmiseException;
+import org.junit.*;
 
 import java.io.IOException;
 import java.util.HashMap;
 
-import co.omise.exception.OmiseAPIException;
-import co.omise.exception.OmiseException;
-import co.omise.model.Card;
-import co.omise.model.Cards;
-import co.omise.model.Customer;
-import co.omise.model.Token;
-import co.omise.Omise;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 public class CustomerCardTokenTest {
 
@@ -44,14 +35,34 @@ public class CustomerCardTokenTest {
 		try {
 			// Token.create
 			final Token token = Token.create(new HashMap<String, Object>() {
-					{put("card[name]", "Somchai Prasert");}
-					{put("card[number]", 4242424242424242L);}
-					{put("card[expiration_month]", 10);}
-					{put("card[expiration_year]", 2018);}
-					{put("card[city]", "Bangkok");}
-					{put("card[postal_code]", "10320");}
-					{put("card[security_code]", 123);}
-				});
+				{put("card[name]", "Somchai Prasert");
+				}
+				{
+					put("card[number]", 4242424242424242L);
+				}
+
+				{
+					put("card[expiration_month]", 10);
+				}
+
+				{
+					put("card[expiration_year]", 2018);
+				}
+
+				{
+					put("card[city]", "Bangkok");
+				}
+
+				{
+					put("card[postal_code]", "10320");
+				}
+
+				{
+					put("card[security_code]", 123);
+				}
+			});
+
+
 			assertNotNull("Token.create failed: could not create a token", token.getObject());
 			assertEquals("Token.create failed: the retrieved object is not a token", token.getObject(), "token");
 			assertEquals("Token.create failed: the card creation failed", token.getCard().getObject(), "card");
@@ -64,10 +75,18 @@ public class CustomerCardTokenTest {
 
 			// Customer.create
 			final Customer customer = Customer.create(new HashMap<String, Object>() {
-					{put("email", "john.doe@example.com");}
-					{put("description", "John Doe (id: 30)");}
-					{put("card", token.getId());}
-				});
+				{
+					put("email", "john.doe@example.com");
+				}
+
+				{
+					put("description", "John Doe (id: 30)");
+				}
+
+				{
+					put("card", token.getId());
+				}
+			});
 			assertNotNull("Customer.create failed: could not create a customer", customer.getObject());
 			assertEquals("Customer.create failed: the retrieved object is not a customer", customer.getObject(), "customer");
 

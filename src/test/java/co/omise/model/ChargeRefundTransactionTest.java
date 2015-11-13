@@ -1,26 +1,14 @@
-package test.co.omise;
+package co.omise.model;
 
-import static org.junit.Assert.*;
+import co.omise.OmiseSetting;
+import co.omise.exception.OmiseAPIException;
+import co.omise.exception.OmiseException;
+import org.junit.*;
 
 import java.io.IOException;
 import java.util.HashMap;
 
-import co.omise.exception.OmiseAPIException;
-import co.omise.exception.OmiseException;
-import co.omise.model.Charge;
-import co.omise.model.Charges;
-import co.omise.model.Refund;
-import co.omise.model.Refunds;
-import co.omise.model.Token;
-import co.omise.model.Transaction;
-import co.omise.model.Transactions;
-import co.omise.Omise;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 public class ChargeRefundTransactionTest {
 
@@ -64,23 +52,53 @@ public class ChargeRefundTransactionTest {
 		try {
 			// Charge.create
 			final Token token = Token.create(new HashMap<String, Object>() {
-					{put("card[name]", "Somchai Prasert");}
-					{put("card[number]", 4242424242424242L);}
-					{put("card[expiration_month]", 10);}
-					{put("card[expiration_year]", 2018);}
-					{put("card[city]", "Bangkok");}
-					{put("card[postal_code]", "10320");}
-					{put("card[security_code]", 123);}
-				});
+				{
+					put("card[name]", "Somchai Prasert");
+				}
+
+				{
+					put("card[number]", 4242424242424242L);
+				}
+
+				{
+					put("card[expiration_month]", 10);
+				}
+
+				{
+					put("card[expiration_year]", 2018);
+				}
+
+				{
+					put("card[city]", "Bangkok");
+				}
+
+				{
+					put("card[postal_code]", "10320");
+				}
+
+				{
+					put("card[security_code]", 123);
+				}
+			});
 			Charge charge = Charge.create(new HashMap<String, Object>() {
-					{put("return_uri", "https://example.co.th/orders/384/complete");}
-					{put("amount", 100000);}
-					{put("currency", "thb");}
-					{put("description", "Order-384");}
-					{put("ip", "127.0.0.1");}
-					{put("card", token.getId());}
-					{put("capture", false);}
-				});
+				{
+					put("return_uri", "https://example.co.th/orders/384/complete");
+				}
+				{
+					put("amount", 100000);
+				}
+				{
+					put("currency", "thb");
+				}
+				{
+					put("description", "Order-384");
+				}
+				{
+					put("ip", "127.0.0.1");
+				}
+				{put("card", token.getId());}
+			});
+
 			assertEquals("Charge.create failed: could not create a charge", charge.getObject(), "charge");
 
 			// Charge.retrieve
@@ -91,10 +109,6 @@ public class ChargeRefundTransactionTest {
 					{put("description", "Another description");}
 				});
 			assertEquals("Charge.update failed: could not update a charge", charge.getDescription(), "Another description");
-
-			// Charge.capture
-			charge.capture();
-			assertTrue("Charge.capture failed: could not capture a charge", charge.getCaptured());
 
 			// Refund.retrieve (list all)
 			Refunds refunds = charge.refunds();
@@ -117,6 +131,7 @@ public class ChargeRefundTransactionTest {
 			// Transaction.retrieve(id)
 			Transaction transaction = Transaction.retrieve(charge.getTransaction());
 			assertEquals("Transaction.retrieve(id) failed: could not retrieve a transaction", transaction.getObject(), "transaction");
+
 		} catch (IOException e) {
 			fail(e.getMessage());
 		} catch (OmiseAPIException e) {

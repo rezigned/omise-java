@@ -1,24 +1,14 @@
-package test.co.omise;
+package co.omise.model;
 
-import static org.junit.Assert.*;
+import co.omise.OmiseSetting;
+import co.omise.exception.OmiseAPIException;
+import co.omise.exception.OmiseException;
+import org.junit.*;
 
 import java.io.IOException;
 import java.util.HashMap;
 
-import junit.extensions.TestSetup;
-import co.omise.exception.OmiseAPIException;
-import co.omise.exception.OmiseException;
-import co.omise.model.Account;
-import co.omise.model.DeleteRecipient;
-import co.omise.model.Recipient;
-import co.omise.model.Recipients;
-import co.omise.Omise;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 public class RecipientTest {
 	@BeforeClass
@@ -43,14 +33,33 @@ public class RecipientTest {
 		try {
 			//Recipient.create
 			Recipient recipient = Recipient.create(new HashMap<String, Object>() {
-				{put("name", "Somchai Prasert");}
-				{put("email", "somchai.prasert@example.com");}
-				{put("type", "individual");}
-				{put("bank_account", new HashMap<String, Object>() {
-					{put("brand", "bbl");}
-					{put("number", "1234567890");}
-					{put("name", "SOMCHAI PRASERT");}
-				});}
+				{
+					put("name", "Somchai Prasert");
+				}
+
+				{
+					put("email", "somchai.prasert@example.com");
+				}
+
+				{
+					put("type", "individual");
+				}
+
+				{
+					put("bank_account", new HashMap<String, Object>() {
+						{
+							put("brand", "bbl");
+						}
+
+						{
+							put("number", "1234567890");
+						}
+
+						{
+							put("name", "SOMCHAI PRASERT");
+						}
+					});
+				}
 			});
 			assertNotNull("Recipient.create failed: could not create a recipient", recipient.getObject());
 			assertEquals("Recipient.create failed: the retrieved object is not a recipient", recipient.getObject(), "recipient");

@@ -1,12 +1,10 @@
 package co.omise.model;
 
+import co.omise.exception.*;
+import co.omise.net.APIResource;
+
 import java.io.IOException;
 import java.util.HashMap;
-
-import co.omise.exception.OmiseAPIException;
-import co.omise.exception.OmiseKeyUnsetException;
-import co.omise.exception.OmiseUnknownException;
-import co.omise.net.APIResource;
 
 public class Card extends APIResource {
 	protected static final String ENDPOINT = "cards";
@@ -27,6 +25,7 @@ public class Card extends APIResource {
 	protected String fingerprint = null;
 	protected String name = null;
 	protected String created = null;
+	protected String bank = null;
 
 	public String getObject() {
 		return object;
@@ -73,6 +72,7 @@ public class Card extends APIResource {
 	public String getCreated() {
 		return created;
 	}
+	public String getBank() {return bank;}
 
 	/**
 	 * @return
@@ -80,8 +80,10 @@ public class Card extends APIResource {
 	 * @throws OmiseKeyUnsetException
 	 * @throws OmiseUnknownException
 	 * @throws IOException
+	 * @throws OmiseAPIConnectionException
+	 * @throws OmiseInvalidRequestException
 	 */
-	public Card reload() throws OmiseAPIException, OmiseKeyUnsetException, OmiseUnknownException, IOException {
+	public Card reload() throws OmiseAPIException, OmiseKeyUnsetException, OmiseUnknownException, IOException, OmiseAPIConnectionException, OmiseInvalidRequestException  {
 		return updateMyself((Card)request(OmiseURL.API, String.format("%s/%s/%s/%s", Customer.ENDPOINT, customer_id, ENDPOINT, id), RequestMethod.GET, null, Card.class));
 	}
 
@@ -92,8 +94,10 @@ public class Card extends APIResource {
 	 * @throws OmiseKeyUnsetException
 	 * @throws OmiseUnknownException
 	 * @throws IOException
+	 * @throws OmiseAPIConnectionException
+	 * @throws OmiseInvalidRequestException
 	 */
-	public Card update(HashMap<String, Object> params) throws OmiseAPIException, OmiseKeyUnsetException, OmiseUnknownException, IOException {
+	public Card update(HashMap<String, Object> params) throws OmiseAPIException, OmiseKeyUnsetException, OmiseUnknownException, IOException, OmiseAPIConnectionException, OmiseInvalidRequestException  {
 		return updateMyself((Card)request(OmiseURL.API, String.format("%s/%s/%s/%s", Customer.ENDPOINT, customer_id, ENDPOINT, id), RequestMethod.PATCH, params, Card.class));
 	}
 
@@ -103,8 +107,10 @@ public class Card extends APIResource {
 	 * @throws OmiseKeyUnsetException
 	 * @throws OmiseUnknownException
 	 * @throws IOException
+	 * @throws OmiseAPIConnectionException
+	 * @throws OmiseInvalidRequestException
 	 */
-	public DeleteCard destroy() throws OmiseAPIException, OmiseKeyUnsetException, OmiseUnknownException, IOException {
+	public DeleteCard destroy() throws OmiseAPIException, OmiseKeyUnsetException, OmiseUnknownException, OmiseAPIConnectionException, OmiseInvalidRequestException , IOException {
 		return (DeleteCard)request(OmiseURL.API, String.format("%s/%s/%s/%s", Customer.ENDPOINT, customer_id, ENDPOINT, id), RequestMethod.DELETE, null, DeleteCard.class);
 	}
 
@@ -129,6 +135,7 @@ public class Card extends APIResource {
 		this.fingerprint = card.getFingerprint();
 		this.name = card.getName();
 		this.created = card.getCreated();
+		this.bank = card.getBank();
 
 		return this;
 	}

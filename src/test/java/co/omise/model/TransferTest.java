@@ -1,22 +1,14 @@
-package test.co.omise;
+package co.omise.model;
 
-import static org.junit.Assert.*;
+import co.omise.OmiseSetting;
+import co.omise.exception.OmiseAPIException;
+import co.omise.exception.OmiseException;
+import org.junit.*;
 
 import java.io.IOException;
 import java.util.HashMap;
 
-import co.omise.exception.OmiseAPIException;
-import co.omise.exception.OmiseException;
-import co.omise.model.Balance;
-import co.omise.model.Transfer;
-import co.omise.model.Transfers;
-import co.omise.Omise;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 public class TransferTest {
 	@BeforeClass
@@ -64,8 +56,10 @@ public class TransferTest {
 			if(balance.getAvailable() >= 100000) {
 				// Transfer.create
 				Transfer transfer = Transfer.create(new HashMap<String, Object>() {
-						{put("amount", 100000);}
-					});
+					{
+						put("amount", 100000);
+					}
+				});
 				assertEquals("Transfer.create failed: could not create a transfer", transfer.getObject(), "transfer");
 
 				// Transfer.retrieve(id)

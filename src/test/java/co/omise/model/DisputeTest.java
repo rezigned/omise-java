@@ -1,22 +1,15 @@
-package test.co.omise;
+package co.omise.model;
 
-import static org.junit.Assert.*;
+import co.omise.OmiseSetting;
+import co.omise.exception.OmiseAPIException;
+import co.omise.exception.OmiseException;
+import co.omise.model.Dispute.DisputeStatus;
+import org.junit.*;
 
 import java.io.IOException;
 import java.util.HashMap;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import co.omise.exception.OmiseAPIException;
-import co.omise.exception.OmiseException;
-import co.omise.model.Dispute;
-import co.omise.model.Dispute.DisputeStatus;
-import co.omise.model.Disputes;
-import co.omise.Omise;
+import static org.junit.Assert.*;
 
 public class DisputeTest {
 	@BeforeClass
