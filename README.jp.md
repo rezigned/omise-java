@@ -15,14 +15,14 @@ Mavenを使った場合
 <dependency>
   <groupId>co.omise</groupId>
   <artifactId>omise-java</artifactId>
-  <version>1.0.2</version>
+  <version>1.0.6</version>
 </dependency>
 ```
 
 Gradleを使った場合
 
 ```
-compile 'co.omise:omise-java:1.0.2'
+compile 'co.omise:omise-java:1.0.6'
 ```
 
 ### Manually
