@@ -15,14 +15,14 @@ Using older version of the requirements may work, but it is not officially suppo
 <dependency>
   <groupId>co.omise</groupId>
   <artifactId>omise-java</artifactId>
-  <version>1.0.5</version>
+  <version>1.0.6</version>
 </dependency>
 ```
 
 กรณี ใช้ Gradle, สามารถเพิ่ม Omise lib เข้าไปในไฟล์ build.gradle ตามด้านล่าง.
 
 ```
-compile 'co.omise:omise-java:1.0.5'
+compile 'co.omise:omise-java:1.0.6'
 ```
 
 ### ใช้ jar file
