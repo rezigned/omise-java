@@ -12,6 +12,7 @@ import okhttp3.RequestBody;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.List;
 
 /**
@@ -83,16 +84,32 @@ public class Schedule extends Model {
         return startDate;
     }
 
+    public long getStartDateMilli() {
+        return startDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
+    }
+
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
+    }
+
+    public void setStartDate(int year, int month, int dayOfMonth) {
+        startDate = LocalDate.of(year, month, dayOfMonth);
     }
 
     public LocalDate getEndDate() {
         return endDate;
     }
 
+    public long getEndDateMilli() {
+        return endDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
+    }
+
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public void setEndDate(int year, int month, int dayOfMonth) {
+        endDate = LocalDate.of(year, month, dayOfMonth);
     }
 
     public ChargeScheduling getCharge() {
@@ -144,7 +161,8 @@ public class Schedule extends Model {
 
         @Override
         protected ResponseType<ScopedList<Schedule>> type() {
-            return new ResponseType<>(new TypeReference<ScopedList<Schedule>>() {});
+            return new ResponseType<>(new TypeReference<ScopedList<Schedule>>() {
+            });
         }
 
         public ListRequestBuilder options(ScopedList.Options options) {
@@ -289,15 +307,13 @@ public class Schedule extends Model {
             if (options == null) {
                 options = new ScopedList.Options();
             }
-            return new HttpUrlBuilder(Endpoint.API, "charges", serializer())
-                    .segments("schedules")
-                    .params(options)
-                    .build();
+            return new HttpUrlBuilder(Endpoint.API, "charges", serializer()).segments("schedules").params(options).build();
         }
 
         @Override
         protected ResponseType<ScopedList<Schedule>> type() {
-            return new ResponseType<>(new TypeReference<ScopedList<Schedule>>() {});
+            return new ResponseType<>(new TypeReference<ScopedList<Schedule>>() {
+            });
         }
 
         public ChargeScheduleListRequestBuilder options(ScopedList.Options options) {
@@ -323,15 +339,13 @@ public class Schedule extends Model {
             if (options == null) {
                 options = new ScopedList.Options();
             }
-            return new HttpUrlBuilder(Endpoint.API, "customers", serializer())
-                    .segments(customerId, "schedules")
-                    .params(options)
-                    .build();
+            return new HttpUrlBuilder(Endpoint.API, "customers", serializer()).segments(customerId, "schedules").params(options).build();
         }
 
         @Override
         protected ResponseType<ScopedList<Schedule>> type() {
-            return new ResponseType<>(new TypeReference<ScopedList<Schedule>>() {});
+            return new ResponseType<>(new TypeReference<ScopedList<Schedule>>() {
+            });
         }
 
         public CustomerScheduleListRequestBuilder options(ScopedList.Options options) {
@@ -345,20 +359,19 @@ public class Schedule extends Model {
      */
     public static class TransferScheduleListRequestBuilder extends RequestBuilder<ScopedList<Schedule>> {
         private ScopedList.Options options;
+
         @Override
         protected HttpUrl path() {
             if (options == null) {
                 options = new ScopedList.Options();
             }
-            return new HttpUrlBuilder(Endpoint.API, "transfers", serializer())
-                    .segments("schedules")
-                    .params(options)
-                    .build();
+            return new HttpUrlBuilder(Endpoint.API, "transfers", serializer()).segments("schedules").params(options).build();
         }
 
         @Override
         protected ResponseType<ScopedList<Schedule>> type() {
-            return new ResponseType<>(new TypeReference<ScopedList<Schedule>>() {});
+            return new ResponseType<>(new TypeReference<ScopedList<Schedule>>() {
+            });
         }
 
         public TransferScheduleListRequestBuilder options(ScopedList.Options options) {
@@ -384,15 +397,13 @@ public class Schedule extends Model {
             if (options == null) {
                 options = new ScopedList.Options();
             }
-            return new HttpUrlBuilder(Endpoint.API, "recipients", serializer())
-                    .segments(recipientId, "schedules")
-                    .params(options)
-                    .build();
+            return new HttpUrlBuilder(Endpoint.API, "recipients", serializer()).segments(recipientId, "schedules").params(options).build();
         }
 
         @Override
         protected ResponseType<ScopedList<Schedule>> type() {
-            return new ResponseType<>(new TypeReference<ScopedList<Schedule>>() {});
+            return new ResponseType<>(new TypeReference<ScopedList<Schedule>>() {
+            });
         }
 
         public RecipientScheduleListRequestBuilder options(ScopedList.Options options) {
