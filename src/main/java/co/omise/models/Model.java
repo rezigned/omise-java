@@ -42,6 +42,10 @@ public abstract class Model extends OmiseObjectBase {
         return created;
     }
 
+    public long getCreatedMilli() {
+        return created.toEpochMilli();
+    }
+
     public void setCreated(Instant created) {
         this.created = created;
     }
